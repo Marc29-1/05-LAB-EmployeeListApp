@@ -1,0 +1,42 @@
+﻿@page "/employees"
+@inject EmployeesService employeesService
+
+<h1>Employees</h1>
+
+@if (employees == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full name</th>
+                <th>Department</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var e in employees)
+            {
+                <tr>
+                    <td>@e.Id</td>
+                    <td>@e.FullName</td>
+                    <td>@e.Department</td>
+                    <td>@e.Salary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    List<Employee> employees;
+
+    protected override async Task OnInitializedAsync()
+    {
+        employees = await employeesService.GetEmployeesAsync();
+    }
+}
